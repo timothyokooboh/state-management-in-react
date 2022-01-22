@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Blog from './components/Blog';
+// import Home from './components/Home';
+import AuthContextProvider from './context/AuthContext';
+import BlogContextProvider from './context/BlogContext';
+import UserContextProvider from './context/UserContext.js';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn state management in React
-        </a>
-      </header>
+      <UserContextProvider>
+        <AuthContextProvider>
+          { /* <Home /> */ }
+          <BlogContextProvider>
+            <Blog />
+          </BlogContextProvider>
+        </AuthContextProvider>
+      </UserContextProvider>
     </div>
   );
 }
