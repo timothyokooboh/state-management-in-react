@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid"
-import { useState, useContext } from "react";
+import { useState, useContext, createRef, useEffect, useRef } from "react";
 import { BlogContext } from "../context/BlogContext";
+import FancyButton from "./Button";
 
 const Blog = () => {
     const [title, setTitle] = useState("");
@@ -18,20 +19,41 @@ const Blog = () => {
         setContent("");
     }
 
+    const titleLabel = createRef();
+    const contentLabel = createRef();
+    useEffect(() => {
+      //  console.log(titleLabel.current);
+      //  console.log(contentLabel.current);
+    }, [])
+
+    const ref = useRef(null)
+    const man = useRef("john")
+
+    const handleClick = () => {
+       console.log(ref.current);
+       man.current = "blake"
+       // ref.current.setAttribute('hidden', true);
+    }
+
+    useEffect(() => {
+        console.log(man.current)
+    })
+
+
     return ( 
         <div>
             <h1> My blogs </h1>
 
             <form onSubmit={addBlog}>
                 <div style={{marginBottom: '20px' }}>
-                    <label>
+                    <label ref={titleLabel}>
                         <span>Title</span> <br />
                         <input type="text" value={title} onInput={(e) => setTitle(e.target.value) } />
                     </label>
                 </div>
 
                <div>
-                <label>
+                <label ref={contentLabel}>
                         <span>Content</span> <br />
                         <textarea type="text" value={content} onInput={(e) => setContent(e.target.value)} ></textarea>
                     </label>
@@ -52,6 +74,15 @@ const Blog = () => {
                         )
                     })
                 }
+            </div>
+
+            <div style={{marginTop: '50px', marginBottom: '30px'}}>
+                <button onClick={handleClick}>click me</button>
+            </div>
+
+            <FancyButton ref={ref}>Click me now</FancyButton>
+            <div>
+                { man.current }
             </div>
         </div>
     );
